@@ -28,16 +28,17 @@ user:
   backend_ws:
       disabled_post_install: true
       label:
-        Laravel Version
+        Wordpress Version
       hint:
-        Select a laravel version
+        Select a Wordpress version
       type:
         select
       values:
-        - 7
-        - 8
+        - "5.9.1"
+        - "4.9.19"
+        - "3.9.35"
       target:
-        LARAVEL_VERSION
+        WP_VERSION
 
   php_error_reporting:
     label:
