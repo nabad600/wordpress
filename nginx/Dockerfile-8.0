@@ -3,7 +3,7 @@ LABEL maintainer Naba Das <hello@get-deck.com>
 
 # Persistent runtime dependencies
 # Example RUN apk add --no-cache php8-openssl php8-sysvmsg php8-curl
-RUN apk add --no-cache rsync
+RUN apk add --no-cache tar
 
 RUN mkdir -p /app
 RUN mkdir -p /var/preview
@@ -12,7 +12,21 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 COPY default.conf /app/default.conf
 RUN curl -o /app/wordpress.tar.gz -fL "https://wordpress.org/wordpress-$WP_VERSION.tar.gz"; \
 	tar -xzf /app/wordpress.tar.gz -C /app/; \
-	rm /app/wordpress.tar.gz;
+	rm /app/wordpress.tar.gz; \
+	[ ! -e /app/wordpress/.htaccess ]; \
+	{ \
+		echo '# BEGIN WordPress'; \
+		echo ''; \
+		echo 'RewriteEngine On'; \
+		echo 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]'; \
+		echo 'RewriteBase /'; \
+		echo 'RewriteRule ^index\.php$ - [L]'; \
+		echo 'RewriteCond %{REQUEST_FILENAME} !-f'; \
+		echo 'RewriteCond %{REQUEST_FILENAME} !-d'; \
+		echo 'RewriteRule . /index.php [L]'; \
+		echo ''; \
+		echo '# END WordPress'; \
+	} > /app/wordpress/.htaccess;
 RUN wget -O /var/preview/index.html https://raw.githubusercontent.com/deck-app/stack-preview-screen/main/install/index.html
 RUN sed -i "s#{SERVER_ROOT}#/var/preview#g" /etc/nginx/conf.d/default.conf
 RUN sed -i "s#{SERVER_ROOT}#/var/www/public#g" /app/default.conf
