@@ -2,7 +2,7 @@ version: '3'
 services:
   wordpress:
     build:
-      context: '${BACK_END}'
+      context: 'contaner'
       dockerfile: 'Dockerfile-${PHP_VERSION}'
       args:
         - 'BACK_END=${BACK_END}'
@@ -13,6 +13,10 @@ services:
         - 'WP_VERSION=${WP_VERSION}'
         - 'XDEBUG=${XDEBUG}'
         - 'INSTALL_ADDITIONAL_EXTENSIONS=${INSTALL_ADDITIONAL_EXTENSIONS}'
+        - 'DB_NAME=${DB_NAME}'
+        - 'DB_USER=${DB_USER}'
+        - 'DB_PASSWORD=${DB_PASSWORD}'
+        - 'DB_HOST=${DB_HOST}'
     volumes:
       - '${APP_CODE_PATH_HOST}:${SERVER_ROOT}${APP_CODE_CONTAINER_FLAG}'
     ports:
