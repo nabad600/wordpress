@@ -17,6 +17,9 @@ $ docker-compose up -d
 #### Modifying project settings
 From the DECK app, go to stack list and click on project's `More > configure > Advanced configuration` Follow the instructions below and restart your stack from the GUI
 
+#### Modifying php.ini settings
+Go to `contaner > edit php.ini` and rebuild.
+
 #### Rebuilding from terminal
 You have to rebuild the docker image after you make any changes to the project configuration, use the snippet below to rebuild and restart the stack
 `docker-compose stop && docker-compose up --build -d`
