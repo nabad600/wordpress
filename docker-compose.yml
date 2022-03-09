@@ -17,6 +17,7 @@ services:
         - 'DB_USER=${DB_USER}'
         - 'DB_PASSWORD=${DB_PASSWORD}'
         - 'DB_HOST=${DB_HOST}'
+        - 'WORDPRESS_DEBUG=${WORDPRESS_DEBUG}'
     volumes:
       - '${APP_CODE_PATH_HOST}:${SERVER_ROOT}${APP_CODE_CONTAINER_FLAG}'
     ports:

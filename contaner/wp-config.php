@@ -79,8 +79,10 @@ $table_prefix = 'wp_';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-define( 'WP_DEBUG', false );
-
+define( 'WP_DEBUG', {WORDPRESS_DEBUG} );
+define( 'FORCE_SSL_ADMIN', true );
+if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)
+$_SERVER['HTTPS']='on';
 /* Add any custom values between this line and the "stop editing" line. */
 
 

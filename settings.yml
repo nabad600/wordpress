@@ -39,15 +39,15 @@ user:
         - "3.9.35"
       target:
         WP_VERSION
-
-  php_error_reporting:
+  wp_debug:
     label:
-      Enable PHP error reporting?
+      Enable WordPress debug mode?
     type:
       checkbox
-    hint: Check the box to display PHP errors 
+    hint:
+      Check to enable WordPress debug mode
     target:
-      DISPLAY_PHPERROR
+      WORDPRESS_DEBUG
   php_xdebug:
     label:
       Enable PHP extension XDEBUG?
@@ -88,9 +88,9 @@ system:
     true
   #For collecting and storing DB in .env
   #db/user/password
-  # db_credentials:
-  #   true
+  db_credentials:
+    true
   #Generate public ports for the docker image
   ports:
     http:
-      LARAVEL_HOST_HTTP_PORT
+      WORDPRESS_HOST_HTTP_PORT

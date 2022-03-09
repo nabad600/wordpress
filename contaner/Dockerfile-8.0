@@ -73,26 +73,26 @@ ARG DB_USER
 ARG DB_PASSWORD
 ARG DB_HOST
 ARG BACK_END
+ARG WORDPRESS_DEBUG
 COPY wp-config.php /app/wordpress/wp-config.php
 RUN sed -i "s#{DB_NAME}#${DB_NAME}#g" /app/wordpress/wp-config.php
 RUN sed -i "s#{DB_USER}#${DB_USER}#g" /app/wordpress/wp-config.php
 RUN sed -i "s#{DB_PASSWORD}#${DB_PASSWORD}#g" /app/wordpress/wp-config.php
 RUN sed -i "s#{DB_HOST}#${DB_HOST}#g" /app/wordpress/wp-config.php
+RUN sed -i "s#{WORDPRESS_DEBUG}#${WORDPRESS_DEBUG}#g" /app/wordpress/wp-config.php
 RUN sed -i "s#{BACK_END}#${BACK_END}#g" /docker-entrypoint.sh
 
 
 # Permission denied inside docker container
-ARG BACK_END
-RUN if [[ ${BACK_END} = nginx]]; then \
-    username=nobody \
-;else \
-    username=apache \
-;fi
 ARG USER_ID
 ARG GROUP_ID
 RUN if [ ${USER_ID} -gt 0 ]; then \
 		apk --no-cache add shadow && \
-    	if getent group ${GROUP_ID} ; then usermod -u ${USER_ID} -g ${GROUP_ID} ${username}; else usermod -u ${USER_ID} ${username}; groupmod -g ${GROUP_ID} ${username} ; fi \
+		if [ "$BACK_END" = "nginx" ]; then \
+    	if getent group ${GROUP_ID} ; then usermod -u ${USER_ID} -g ${GROUP_ID} nobody; else usermod -u ${USER_ID} nobody; groupmod -g ${GROUP_ID} nobody ; fi \
+		else \
+		if getent group ${GROUP_ID} ; then usermod -u ${USER_ID} -g ${GROUP_ID} apache; else usermod -u ${USER_ID} apache; groupmod -g ${GROUP_ID} apache ; fi \
+		;fi \
 	;fi
 RUN sed -i "s#{USER_ID}#${USER_ID}#g" /docker-entrypoint.sh
 RUN sed -i "s#{GROUP_ID}#${GROUP_ID}#g" /docker-entrypoint.sh
