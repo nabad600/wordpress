@@ -81,9 +81,9 @@ $table_prefix = 'wp_';
  */
 define( 'WP_DEBUG', {WORDPRESS_DEBUG} );
 define( 'FORCE_SSL_ADMIN', true );
-if (getenv('HTTP_X_FORWARDED_PROTO') == "http" && getenv('REMOTE_ADDR') != '127.0.0.1' && getenv('REMOTE_ADDR') != 'localhost')
-#if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)
-$_SERVER['HTTPS']='on';
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+	$_SERVER['HTTPS'] = 'on';
+}
 /* Add any custom values between this line and the "stop editing" line. */
 
 

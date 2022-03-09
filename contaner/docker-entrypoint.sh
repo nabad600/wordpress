@@ -3,7 +3,7 @@ set +x
 
 if [ ! -e index.php ] && [ ! -e wp-includes/version.php ]; then
                 echo >&2 "WordPress not found in $PWD - copying now..."
-                tar cf - --one-file-system -C /app/wordpress . | tar xf -
+                tar cf - --one-file-system -C /app/wordpress . | tar xf - 2> /dev/null
                 echo >&2 "Complete! WordPress has been successfully copied to $PWD"
 fi
 
