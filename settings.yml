@@ -36,7 +36,6 @@ user:
       values:
         - "5.9.1"
         - "4.9.19"
-        - "3.9.35"
       target:
         WP_VERSION
   wp_debug:
