@@ -2,14 +2,13 @@ version: '3'
 services:
   wordpress:
     build:
-      context: 'contaner'
+      context: 'wp'
       dockerfile: 'Dockerfile-${PHP_VERSION}'
       args:
         - 'BACK_END=${BACK_END}'
         - 'USER_ID=${USER_ID}'
         - 'GROUP_ID=${GROUP_ID}'
         - 'PHP_VERSION=${PHP_VERSION}'
-        - 'DISPLAY_PHPERROR=${DISPLAY_PHPERROR}'
         - 'WP_VERSION=${WP_VERSION}'
         - 'XDEBUG=${XDEBUG}'
         - 'INSTALL_ADDITIONAL_EXTENSIONS=${INSTALL_ADDITIONAL_EXTENSIONS}'
